@@ -36,7 +36,8 @@ client using the command above. From this folder, compile the installer with:
 
 The setup program is created at
 `release\installer\BacNoteCalcule-Setup.exe`. It installs the app for the
-current Windows user and can optionally create a desktop shortcut.
+current Windows user and can optionally create a desktop shortcut. The
+installer lets users select English, French, or Arabic.
 
 ## Layout
 

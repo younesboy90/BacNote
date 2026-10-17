@@ -22,8 +22,24 @@ Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
 
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "french"; MessagesFile: "compiler:Languages\French.isl"
+Name: "arabic"; MessagesFile: "compiler:Languages\Arabic.isl"
+
+[CustomMessages]
+english.DesktopIconTask=Create a desktop shortcut
+english.AdditionalShortcuts=Additional shortcuts:
+english.LaunchApp=Launch {#MyAppName}
+french.DesktopIconTask=Créer un raccourci sur le bureau
+french.AdditionalShortcuts=Raccourcis supplémentaires :
+french.LaunchApp=Lancer {#MyAppName}
+arabic.DesktopIconTask=إنشاء اختصار على سطح المكتب
+arabic.AdditionalShortcuts=اختصارات إضافية:
+arabic.LaunchApp=تشغيل {#MyAppName}
+
 [Tasks]
-Name: "desktopicon"; Description: "Create a desktop shortcut"; GroupDescription: "Additional shortcuts:"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:DesktopIconTask}"; GroupDescription: "{cm:AdditionalShortcuts}"; Flags: unchecked
 
 [Files]
 Source: "{#PublishDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -33,4 +49,4 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "Launch {#MyAppName}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchApp}"; Flags: nowait postinstall skipifsilent

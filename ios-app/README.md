@@ -10,7 +10,7 @@ The Xcode build runs on GitHub's hosted macOS runner. This workflow deliberately
 2. Open the repository's **Actions** tab, select **Build iOS IPA**, and choose **Run workflow**.
 3. When the run completes, download the `BACNoteCalcule-unsigned-IPA` artifact and extract it to get `BACNoteCalcule-unsigned.ipa`.
 
-This workspace is not connected to a GitHub repository, so the workflow cannot be started from here. The source and workflow need to be uploaded to GitHub before its hosted Mac can build the IPA.
+The workflow is included in this repository at `.github/workflows/build-ios-unsigned.yml`, so you can start it from the repository's **Actions** tab.
 
 ## Install it with a free Apple ID
 
