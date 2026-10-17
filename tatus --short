@@ -1,0 +1,20 @@
+[1mdiff --git a/README.md b/README.md[m
+[1mindex f1b4430..90496c5 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -1,2 +1,13 @@[m
+[31m-# BacNote[m
+[31m-Moroccan Baccalaureate grade calculator for windows and android[m
+[32m+[m
+[32m+[m[32m# BAC Note calculé[m
+[32m+[m
+[32m+[m[32mThe project is split by platform and purpose:[m
+[32m+[m
+[32m+[m[32m- [Windows client](./windows-client/README.md) — bilingual C# WPF x64 desktop application[m
+[32m+[m[32m- `android-bac-app/` — Android Studio project and Android release APK[m
+[32m+[m[32m- [Website](./website/README.md) — responsive browser version of the Android calculator[m
+[32m+[m[32m- [iPhone app](./ios-app/README.md) — build an unsigned IPA on GitHub Actions and sideload it with a free Apple ID[m
+[32m+[m[32m- `language-preview/` — bilingual preview builds and screenshots[m
+[32m+[m
+[32m+[m[32mBuild and publish instructions for the Windows application are in[m
+[32m+[m[32m[windows-client/README.md](./windows-client/README.md).[m

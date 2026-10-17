@@ -1,0 +1,10 @@
+.idea/
+android-bac-app/.gradle/
+android-bac-app/**/build/
+android-bac-app/local.properties
+windows-client/build/
+ios-app/WebContent/
+ios-app/build/
+ios-app/ipa/
+ios-app/*.xcodeproj/
+ios-app/*.ipa

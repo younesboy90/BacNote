@@ -1,0 +1,57 @@
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Bundle the calculator website
+        run: |
+          mkdir -p ios-app/WebContent
+          cp -R website/. ios-app/WebContent/
+          mkdir -p ios-app/Assets.xcassets/AppIcon.appiconset
+          sips -Z 1024 website/assets/bac_logo.png --out /tmp/bac-note-icon.png
+          sips --padToHeightWidth 1024 1024 --padColor f7f8fa /tmp/bac-note-icon.png \
+            --out ios-app/Assets.xcassets/AppIcon.appiconset/AppIcon.png
+
+      - name: Generate the Xcode project
+        run: xcodegen generate --spec project.yml
+        working-directory: ios-app
+
+      - name: Build unsigned iOS app
+        run: |
+          xcodebuild \
+            -project ios-app/BACNoteCalcule.xcodeproj \
+            -scheme BACNoteCalcule \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath ios-app/build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p ios-app/ipa/Payload
+          cp -R ios-app/build/Build/Products/Release-iphoneos/BACNoteCalcule.app ios-app/ipa/Payload/
+          (cd ios-app/ipa && zip -qry ../BACNoteCalcule-unsigned.ipa Payload)
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: BACNoteCalcule-unsigned-IPA
+          path: ios-app/BACNoteCalcule-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 30

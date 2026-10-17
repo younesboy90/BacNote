@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <ApplicationIcon>resources\bac_logo.ico</ApplicationIcon>
+    <AssemblyName>BacNoteCalcule</AssemblyName>
+    <RootNamespace>BacNoteCalcule</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Resource Include="resources\bac_logo.png" />
+    <Resource Include="..\android-bac-app\app\src\main\res\drawable-nodpi\reddit_icon.png"
+              Link="resources\reddit_icon.png" />
+  </ItemGroup>
+</Project>

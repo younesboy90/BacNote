@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="Calculez vos moyennes du baccalauréat marocain, en français ou en arabe.">
+  <title>BAC Note calculé — Calculatrice du baccalauréat marocain</title>
+  <link rel="icon" type="image/png" href="assets/bac_logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="BAC Note calculé — accueil">
+        <img class="brand-logo" src="assets/bac_logo.png" alt="">
+        <span class="brand-copy">
+          <span class="brand-title" data-i18n="title">BAC Note calculé</span>
+          <span class="brand-subtitle" data-i18n="subtitle">Calculatrice du baccalauréat marocain</span>
+        </span>
+      </a>
+      <div class="brand-actions">
+        <a class="social-button reddit-button" href="https://www.reddit.com/r/BAcalculeNote/" target="_blank" rel="noopener noreferrer">
+          <img src="assets/reddit_icon.png" alt="">
+          <span>Reddit</span>
+        </a>
+        <a class="social-button paypal-button" href="https://www.paypal.com/paypalme/xyounes9" target="_blank" rel="noopener noreferrer">
+          <svg class="paypal-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 2h8c4.2 0 7 2.6 7 6s-2.8 6.4-7 6.4H9.5L8.8 19H4L5 2Zm2.8 3.5L7 11h4.7c2 0 3.1-1 3.1-2.8s-1.1-2.7-3-2.7H7.8Z" fill="#8ed8f7"/>
+            <path d="M5 2h8c4.2 0 7 2.6 7 6s-2.8 6.4-7 6.4H9.5L8.8 19H4L5 2Zm2.8 3.5L7 11h4.7c2 0 3.1-1 3.1-2.8s-1.1-2.7-3-2.7H7.8Z" fill="#fff" transform="translate(-1 2)"/>
+          </svg>
+          <span data-i18n="donation">Donation</span>
+        </a>
+        <div class="header-controls">
+          <div class="language-wrap">
+            <button class="language-button" id="language-button" type="button" aria-haspopup="true" aria-expanded="false">
+              <span class="flag" id="current-flag" aria-hidden="true"></span>
+              <span id="current-language">FR</span>
+              <span class="chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="language-menu" id="language-menu" role="menu" hidden>
+              <button type="button" role="menuitemradio" data-language="fr" aria-checked="true">
+                <span class="flag" data-flag="fr" aria-hidden="true"></span><span>Français</span>
+              </button>
+              <button type="button" role="menuitemradio" data-language="ar" aria-checked="false">
+                <span class="flag" data-flag="ar" aria-hidden="true"></span><span lang="ar">العربية</span>
+              </button>
+            </div>
+          </div>
+          <button class="theme-button" id="theme-button" type="button" aria-label="Passer au thème sombre">
+            <span id="theme-icon" aria-hidden="true">☾</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <nav class="page-tabs" aria-label="Calculatrice">
+        <button class="page-tab is-active" id="national-tab" type="button" aria-selected="true" data-i18n="nationalTab">Calcul Bac</button>
+        <button class="page-tab" id="regional-tab" type="button" aria-selected="false" data-i18n="regionalTab">Examen régional</button>
+      </nav>
+
+      <section class="calculator-page" id="national-page" aria-labelledby="national-tab">
+        <section class="card track-card">
+          <label class="section-title" for="track-select" data-i18n="track">VOTRE FILIÈRE</label>
+          <select id="track-select"></select>
+        </section>
+
+        <div class="national-layout">
+          <div class="entry-column">
+            <section class="card">
+              <h1 class="section-title" data-i18n="nationalExam">EXAMEN NATIONAL</h1>
+              <div class="grade-list" id="national-grades"></div>
+              <button class="secondary-button full-width" id="calculate-national" type="button" data-i18n="calculateNational">Calculer la moyenne nationale</button>
+              <p class="inline-average" id="national-average" aria-live="polite">Moyenne nationale : -- / 20</p>
+            </section>
+
+            <section class="card">
+              <h2 class="section-title" data-i18n="continuous">CONTRÔLE CONTINU</h2>
+              <p class="card-hint" data-i18n="continuousHint">Moyenne des deux semestres.</p>
+              <div class="grade-list semester-list">
+                <label class="grade-row">
+                  <span data-i18n="semesterOne">Contrôle continu — semestre 1</span>
+                  <input class="grade-input" id="semester-one" type="text" inputmode="decimal" autocomplete="off" placeholder="0 – 20" aria-label="Contrôle continu — semestre 1">
+                </label>
+                <label class="grade-row">
+                  <span data-i18n="semesterTwo">Contrôle continu — semestre 2</span>
+                  <input class="grade-input" id="semester-two" type="text" inputmode="decimal" autocomplete="off" placeholder="0 – 20" aria-label="Contrôle continu — semestre 2">
+                </label>
+              </div>
+              <button class="secondary-button full-width" id="calculate-continuous" type="button" data-i18n="calculateContinuous">Calculer la moyenne du contrôle continu</button>
+              <p class="inline-average" id="continuous-average" aria-live="polite">Moyenne du contrôle continu : -- / 20</p>
+            </section>
+          </div>
+
+          <aside class="result-column">
+            <section class="card result-card" id="result-card">
+              <div class="score-grid">
+                <div class="score-item">
+                  <span class="score-label" data-i18n="nationalScore">MOYENNE NATIONALE</span>
+                  <strong id="national-score">-- / 20</strong>
+                </div>
+                <div class="score-item">
+                  <span class="score-label" data-i18n="regionalScore">MOYENNE RÉGIONALE</span>
+                  <strong id="regional-score">-- / 20</strong>
+                </div>
+                <div class="score-item">
+                  <span class="score-label" data-i18n="generalScore">MOYENNE GÉNÉRALE</span>
+                  <strong id="general-score">-- / 20</strong>
+                </div>
+              </div>
+              <p class="result-status" id="result-status" aria-live="polite" data-i18n="resultPrompt">Entrez vos notes pour calculer votre moyenne</p>
+              <button class="primary-button full-width" id="calculate-general" type="button" data-i18n="calculateGeneral">Calculer la moyenne générale</button>
+            </section>
+            <p class="formula-note" data-i18n="formula">25 % contrôle continu + 25 % régional + 50 % national</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="calculator-page" id="regional-page" aria-labelledby="regional-tab" hidden>
+        <section class="card regional-card">
+          <h1 class="section-title" data-i18n="regionalExam">EXAMEN RÉGIONAL — CALCUL PAR MATIÈRE</h1>
+          <p class="card-hint" data-i18n="regionalHint">Saisissez vos notes sur 20.</p>
+          <div class="grade-list" id="regional-grades"></div>
+          <button class="secondary-button full-width" id="calculate-regional" type="button" data-i18n="calculateRegional">Calculer la moyenne régionale</button>
+          <p class="inline-average" id="regional-average" aria-live="polite">Moyenne régionale : -- / 20</p>
+          <p class="formula-note" data-i18n="regionalWeights">Coefficients régionaux : Arabe 2 · Français 4 · Éducation islamique 2 · Histoire-Géographie 2</p>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-i18n="footer">© 2026 NeydPeric. All rights reserved.</span>
+    </footer>
+  </div>
+
+  <dialog class="result-dialog" id="result-dialog" aria-labelledby="dialog-title">
+    <button class="dialog-close" id="dialog-close" type="button" aria-label="Fermer">×</button>
+    <p class="dialog-eyebrow" id="dialog-title" data-i18n="dialogTitle">Votre moyenne générale</p>
+    <div class="score-ring" id="score-ring">
+      <div class="ring-content">
+        <strong id="dialog-score">0.00</strong>
+        <span>/ 20</span>
+      </div>
+    </div>
+    <span class="grade-mention" id="grade-mention">—</span>
+    <h2 class="dialog-feedback" id="dialog-feedback"></h2>
+    <p class="dialog-encouragement" id="dialog-encouragement"></p>
+  </dialog>
+  <div class="toast" id="toast" role="alert" aria-live="assertive" hidden></div>
+</body>
+</html>

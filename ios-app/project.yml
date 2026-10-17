@@ -1,0 +1,23 @@
+name: BACNoteCalcule
+options:
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    PRODUCT_BUNDLE_IDENTIFIER: com.bacnotecalc.ios
+    PRODUCT_NAME: BACNoteCalcule
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    GENERATE_INFOPLIST_FILE: YES
+    INFOPLIST_KEY_CFBundleDisplayName: "BAC Note"
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+targets:
+  BACNoteCalcule:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    resources:
+      - path: Assets.xcassets
+      - path: WebContent
+        type: folder
