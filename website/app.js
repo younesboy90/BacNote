@@ -77,8 +77,56 @@ const TEXT = {
 
 const $ = (selector) => document.querySelector(selector);
 const gradeState = { national: [], regional: [], semesterOne: "", semesterTwo: "" };
-let language = localStorage.getItem("bac-language") === "ar" ? "ar" : "fr";
-let theme = localStorage.getItem("bac-theme") === "dark" ? "dark" : "light";
+const memoryStorage = new Map();
+let persistentStorageAvailable = true;
+let storageWarningShown = false;
+
+function getStoredValue(key) {
+  if (!persistentStorageAvailable) return memoryStorage.get(key) ?? null;
+
+  try {
+    const value = localStorage.getItem(key);
+    if (value !== null) memoryStorage.set(key, value);
+    return value;
+  } catch (error) {
+    persistentStorageAvailable = false;
+    warnStorageUnavailable(error);
+    return memoryStorage.get(key) ?? null;
+  }
+}
+
+function setStoredValue(key, value) {
+  memoryStorage.set(key, value);
+  if (!persistentStorageAvailable) return;
+
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    persistentStorageAvailable = false;
+    warnStorageUnavailable(error);
+  }
+}
+
+function removeStoredValue(key) {
+  memoryStorage.delete(key);
+  if (!persistentStorageAvailable) return;
+
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    persistentStorageAvailable = false;
+    warnStorageUnavailable(error);
+  }
+}
+
+function warnStorageUnavailable(error) {
+  if (storageWarningShown) return;
+  storageWarningShown = true;
+  console.warn("Persistent storage is unavailable; changes will last only until the app closes.", error);
+}
+
+let language = getStoredValue("bac-language") === "ar" ? "ar" : "fr";
+let theme = getStoredValue("bac-theme") === "dark" ? "dark" : "light";
 let toastTimer;
 
 function tr(key) {
@@ -91,7 +139,7 @@ function setTheme(nextTheme) {
   document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#111820" : "#f7f8fa";
   $("#theme-icon").textContent = theme === "dark" ? "☼" : "☾";
   $("#theme-button").setAttribute("aria-label", tr(theme === "dark" ? "themeLight" : "themeDark"));
-  localStorage.setItem("bac-theme", theme);
+  setStoredValue("bac-theme", theme);
 }
 
 function persistGrades() {
@@ -99,19 +147,19 @@ function persistGrades() {
   gradeState.regional = [...document.querySelectorAll("#regional-grades input")].map((input) => input.value);
   gradeState.semesterOne = $("#semester-one").value;
   gradeState.semesterTwo = $("#semester-two").value;
-  localStorage.setItem("bac-grades", JSON.stringify(gradeState));
-  localStorage.setItem("bac-track", $("#track-select").value);
+  setStoredValue("bac-grades", JSON.stringify(gradeState));
+  setStoredValue("bac-track", $("#track-select").value);
 }
 
 function restoreGrades() {
   try {
-    const saved = JSON.parse(localStorage.getItem("bac-grades") || "{}");
+    const saved = JSON.parse(getStoredValue("bac-grades") || "{}");
     if (Array.isArray(saved.national)) gradeState.national = saved.national;
     if (Array.isArray(saved.regional)) gradeState.regional = saved.regional;
     if (typeof saved.semesterOne === "string") gradeState.semesterOne = saved.semesterOne;
     if (typeof saved.semesterTwo === "string") gradeState.semesterTwo = saved.semesterTwo;
   } catch {
-    localStorage.removeItem("bac-grades");
+    removeStoredValue("bac-grades");
   }
 }
 
@@ -155,7 +203,7 @@ function addGradeRow(parent, { label, value = "", coefficient, id }) {
 
 function renderTrackOptions() {
   const select = $("#track-select");
-  const selected = Number(select.value || localStorage.getItem("bac-track") || 0);
+  const selected = Number(select.value || getStoredValue("bac-track") || 0);
   select.replaceChildren(...TRACKS.map((track, index) => {
     const option = document.createElement("option");
     option.value = String(index);
@@ -227,7 +275,7 @@ function setLanguage(nextLanguage) {
   if (language === nextLanguage) return;
   persistGrades();
   language = nextLanguage;
-  localStorage.setItem("bac-language", language);
+  setStoredValue("bac-language", language);
   updateText();
   $("#language-menu").hidden = true;
   $("#language-button").setAttribute("aria-expanded", "false");
