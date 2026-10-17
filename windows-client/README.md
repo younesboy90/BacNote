@@ -25,6 +25,19 @@ dotnet publish .\BacNoteCalcule.csproj --configuration Release --runtime win-x64
 The packaged x64 client is `release\x64\BacNoteCalcule.exe`. Keep the WPF
 native support DLLs in the same folder as the executable.
 
+## Build an installer
+
+Install [Inno Setup 6](https://jrsoftware.org/isinfo.php), then publish the
+client using the command above. From this folder, compile the installer with:
+
+```powershell
+& "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" .\installer\BacNoteCalcule.iss
+```
+
+The setup program is created at
+`release\installer\BacNoteCalcule-Setup.exe`. It installs the app for the
+current Windows user and can optionally create a desktop shortcut.
+
 ## Layout
 
 - `App.xaml` — shared WPF colors and control styles
@@ -32,3 +45,4 @@ native support DLLs in the same folder as the executable.
 - `BacTrack.cs` — exam-stream metadata and hidden subject weights
 - `resources\` — application icon and logo
 - `release\x64\` — packaged standalone x64 client
+- `installer\BacNoteCalcule.iss` — Inno Setup installer definition

@@ -1,0 +1,76 @@
+ .github/workflows/build-ios-unsigned.yml           |   57 [32m+[m
+ .gitignore                                         |   10 [32m+[m
+ README.md                                          |   15 [32m+[m[31m-[m
+ android-bac-app/.gitignore                         |    3 [32m+[m
+ android-bac-app/README.md                          |   47 [32m+[m
+ android-bac-app/app/build.gradle                   |   38 [32m+[m
+ android-bac-app/app/src/main/AndroidManifest.xml   |   19 [32m+[m
+ .../main/java/com/bacnotecalc/MainActivity.java    | 1342 [32m++++++++++++++++++++[m
+ android-bac-app/app/src/main/jni/Android.mk        |    7 [32m+[m
+ android-bac-app/app/src/main/jni/Application.mk    |    3 [32m+[m
+ android-bac-app/app/src/main/jni/native-lib.cpp    |   50 [32m+[m
+ .../app/src/main/res/drawable-nodpi/bac_logo.png   |  Bin [31m0[m -> [32m266104[m bytes
+ .../src/main/res/drawable-nodpi/reddit_icon.png    |  Bin [31m0[m -> [32m252328[m bytes
+ .../app/src/main/res/drawable/flag_france.xml      |   15 [32m+[m
+ .../app/src/main/res/drawable/flag_morocco.xml     |   16 [32m+[m
+ .../app/src/main/res/drawable/paypal_mark.xml      |   16 [32m+[m
+ .../app/src/main/res/mipmap-nodpi/ic_launcher.png  |  Bin [31m0[m -> [32m183520[m bytes
+ android-bac-app/app/src/main/res/values/colors.xml |    5 [32m+[m
+ android-bac-app/app/src/main/res/values/styles.xml |   20 [32m+[m
+ android-bac-app/build.gradle                       |    3 [32m+[m
+ android-bac-app/gradle.properties                  |    2 [32m+[m
+ android-bac-app/gradle/wrapper/gradle-wrapper.jar  |  Bin [31m0[m -> [32m43504[m bytes
+ .../gradle/wrapper/gradle-wrapper.properties       |    7 [32m+[m
+ android-bac-app/gradlew                            |  252 [32m++++[m
+ android-bac-app/gradlew.bat                        |   94 [32m++[m
+ android-bac-app/release/BacNoteCalcule-Android.apk |  Bin [31m0[m -> [32m819269[m bytes
+ android-bac-app/settings.gradle                    |   18 [32m+[m
+ .../AppIcon.appiconset/Contents.json               |   14 [32m+[m
+ ios-app/README.md                                  |   21 [32m+[m
+ ios-app/Sources/BACNoteCalculeApp.swift            |  154 [32m+++[m
+ ios-app/project.yml                                |   23 [32m+[m
+ .../BacNoteCalcule-BilingualPreview.apk            |  Bin [31m0[m -> [32m788133[m bytes
+ .../BacNoteCalcule-BilingualPreview.exe            |  Bin [31m0[m -> [32m1671168[m bytes
+ language-preview/Preview-Android-AnimatedGrade.png |  Bin [31m0[m -> [32m175032[m bytes
+ language-preview/Preview-Android-Donation.png      |  Bin [31m0[m -> [32m223711[m bytes
+ .../Preview-Android-NationalResult.png             |  Bin [31m0[m -> [32m220435[m bytes
+ language-preview/Preview-Arabic.png                |  Bin [31m0[m -> [32m40624[m bytes
+ language-preview/Preview-French.png                |  Bin [31m0[m -> [32m43822[m bytes
+ language-preview/Preview-LanguageMenu.png          |  Bin [31m0[m -> [32m44508[m bytes
+ language-preview/Preview-Windows-AnimatedGrade.png |  Bin [31m0[m -> [32m12861[m bytes
+ language-preview/Preview-Windows-DarkTheme.png     |  Bin [31m0[m -> [32m64059[m bytes
+ language-preview/Preview-Windows-LightTheme.png    |  Bin [31m0[m -> [32m63577[m bytes
+ language-preview/Preview-Windows-WPF.png           |  Bin [31m0[m -> [32m67335[m bytes
+ language-preview/Preview-Windows-x64-Donation.png  |  Bin [31m0[m -> [32m45055[m bytes
+ .../Preview-Windows-x64-NationalResult.png         |  Bin [31m0[m -> [32m45626[m bytes
+ language-preview/android-current.png               |  Bin [31m0[m -> [32m219668[m bytes
+ language-preview/android-entry-check.png           |  Bin [31m0[m -> [32m237372[m bytes
+ website/README.md                                  |   26 [32m+[m
+ website/app.js                                     |  492 [32m+++++++[m
+ website/assets/bac_logo.png                        |  Bin [31m0[m -> [32m266104[m bytes
+ website/assets/reddit_icon.png                     |  Bin [31m0[m -> [32m252328[m bytes
+ website/index.html                                 |  153 [32m+++[m
+ website/styles.css                                 |  365 [32m++++++[m
+ windows-client/.gitignore                          |    3 [32m+[m
+ windows-client/App.xaml                            |  240 [32m++++[m
+ windows-client/App.xaml.cs                         |    7 [32m+[m
+ windows-client/BacNoteCalcule.csproj               |   24 [32m+[m
+ windows-client/BacTrack.cs                         |   34 [32m+[m
+ windows-client/MainWindow.xaml                     |  369 [32m++++++[m
+ windows-client/MainWindow.xaml.cs                  |  542 [32m++++++++[m
+ windows-client/README.md                           |   34 [32m+[m
+ windows-client/release/BacNoteCalcule.exe          |  Bin [31m0[m -> [32m61858289[m bytes
+ windows-client/release/D3DCompiler_47_cor3.dll     |  Bin [31m0[m -> [32m4916840[m bytes
+ windows-client/release/PenImc_cor3.dll             |  Bin [31m0[m -> [32m157960[m bytes
+ windows-client/release/PresentationNative_cor3.dll |  Bin [31m0[m -> [32m1235768[m bytes
+ windows-client/release/vcruntime140_cor3.dll       |  Bin [31m0[m -> [32m124544[m bytes
+ windows-client/release/wpfgfx_cor3.dll             |  Bin [31m0[m -> [32m1951496[m bytes
+ windows-client/release/x64/BacNoteCalcule.exe      |  Bin [31m0[m -> [32m61858289[m bytes
+ windows-client/release/x64/D3DCompiler_47_cor3.dll |  Bin [31m0[m -> [32m4916840[m bytes
+ windows-client/release/x64/PenImc_cor3.dll         |  Bin [31m0[m -> [32m157960[m bytes
+ .../release/x64/PresentationNative_cor3.dll        |  Bin [31m0[m -> [32m1235768[m bytes
+ windows-client/release/x64/vcruntime140_cor3.dll   |  Bin [31m0[m -> [32m124544[m bytes
+ windows-client/release/x64/wpfgfx_cor3.dll         |  Bin [31m0[m -> [32m1951496[m bytes
+ windows-client/resources/bac_logo.ico              |  Bin [31m0[m -> [32m77792[m bytes
+ windows-client/resources/bac_logo.png              |  Bin [31m0[m -> [32m266104[m bytes
+ 75 files changed, 4538 insertions(+), 2 deletions(-)
