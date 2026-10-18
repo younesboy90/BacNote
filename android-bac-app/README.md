@@ -25,6 +25,10 @@ release\BacNoteCalcule-Android.apk
 This APK is signed with the development key for direct installation; publishing to the Play Store
 requires a private release signing key.
 
+The store privacy policy is maintained in
+[website/privacy-policy.html](../website/privacy-policy.html). Publish the website folder to a
+public static host and provide its `privacy-policy.html` URL in each store listing.
+
 The app includes the BAC Note calculé logo, a shortcut to the `r/BAcalculeNote`
 Reddit community, and a PayPal donation button linking to
 `https://www.paypal.com/paypalme/xyounes9`.

@@ -9,6 +9,10 @@ Open `index.html` in a modern browser to preview it, or serve the `website`
 folder with any static web server and publish its contents to a static host.
 The `assets` folder contains the app logo and Reddit icon.
 
+The multilingual privacy policy is in `privacy-policy.html`. Publish the
+website folder and use the resulting public `privacy-policy.html` URL in the
+Android store listing.
+
 The same calculator is bundled into the [iPhone app](../ios-app/README.md),
 which can be built on a hosted Mac and sideloaded for personal use.
 
