@@ -1213,12 +1213,119 @@ public final class MainActivity extends Activity {
     }
 
     private void buildFooter(LinearLayout parent) {
+        TextView privacyLink = text(tr("Politique de confidentialité", "سياسة الخصوصية"), 13, TEAL);
+        privacyLink.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        privacyLink.setPaintFlags(privacyLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        privacyLink.setGravity(Gravity.CENTER);
+        privacyLink.setPadding(0, dp(8), 0, dp(8));
+        privacyLink.setClickable(true);
+        privacyLink.setFocusable(true);
+        privacyLink.setOnClickListener(view -> showPrivacyPolicy());
+        LinearLayout.LayoutParams linkParams = matchWrap();
+        linkParams.topMargin = dp(12);
+        parent.addView(privacyLink, linkParams);
+
         TextView footer = text("© 2026 NeydPeric. All rights reserved.", 12, MUTED);
         footer.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams params = matchWrap();
-        params.topMargin = dp(16);
+        params.topMargin = dp(4);
         params.bottomMargin = dp(8);
         parent.addView(footer, params);
+    }
+
+    private void showPrivacyPolicy() {
+        String[][] sections = arabicLanguage ? new String[][]{
+                {"المعلومات وطريقة استخدامها",
+                        "تعالج الحاسبة النقط والشعبة التي تدخلها لحساب المعدلات، وتتم الحسابات على جهازك. لا يطلب منك التطبيق إنشاء حساب أو تقديم اسمك أو بريدك الإلكتروني أو موقعك. لا نتلقى نقطك ولا أي بيانات أخرى تدخلها في الحاسبة.\n\nيحفظ التطبيق تفضيلات اللغة والمظهر على جهازك فقط. لا يحفظ النقط كبيانات دائمة؛ وقد يحتفظ أندرويد مؤقتاً بحالة الشاشة لاستعادة الجلسة الحالية."},
+                {"الإعلانات",
+                        "التطبيق مجاني ويعرض إعلانات من Google AdMob. لعرض الإعلانات يستخدم التطبيق الاتصال بالإنترنت، وقد تجمع حزمة Google Mobile Ads تلقائياً المعلومات التالية وتشاركها مع Google وشركائها الإعلانيين:\n\n• المعرّف الإعلاني لجهازك (معرّف إعلانات أندرويد)؛\n• عنوان IP، الذي قد يُستخدم لتقدير موقعك التقريبي (البلد أو المدينة)؛\n• معلومات عن الجهاز والتطبيق، مثل طراز الجهاز وإصدار النظام واللغة وإصدار التطبيق؛\n• التفاعل مع الإعلانات وبيانات التشخيص مثل الأعطال والأداء.\n\nتُستخدم هذه المعلومات لعرض الإعلانات وقياسها، والحد من تكرارها، ومنع الاحتيال، وعرض إعلانات مخصصة عندما يسمح القانون بذلك وبعد موافقتك. لا تتم مشاركة نقطك أو البيانات التي تدخلها في الحاسبة مع المعلنين أبداً. تُشفَّر البيانات التي تجمعها الحزمة أثناء نقلها، وتخضع معالجة Google لسياستها الخاصة:\npolicies.google.com/technologies/partner-sites"},
+                {"اختياراتك",
+                        "عندما يفرض القانون ذلك (مثلاً في المنطقة الاقتصادية الأوروبية والمملكة المتحدة وسويسرا)، يطلب التطبيق موافقتك قبل عرض إعلانات مخصصة. يمكنك إعادة تعيين معرّفك الإعلاني أو حذفه، أو إيقاف الإعلانات المخصصة، من إعدادات جهازك (الإعدادات > Google > الإعلانات، أو الإعدادات > الخصوصية > الإعلانات حسب الجهاز). قد تستمر رؤية إعلانات غير مخصصة."},
+                {"المشاركة والروابط الخارجية",
+                        "لا يتلقى المطوّر بياناتك ولا يبيعها، ولا يستخدم أدوات تحليل منفصلة. باستثناء المعلومات الإعلانية الموضحة أعلاه، لا يشارك التطبيق بياناتك. عند الضغط على زر Reddit أو PayPal، يفتح التطبيق تلك الخدمة خارجه، وتخضع لسياسات الخصوصية الخاصة بها."},
+                {"الاحتفاظ بالبيانات",
+                        "تُحذف تفضيلات التطبيق عند مسح بياناته أو إلغاء تثبيته. تحتفظ Google بالبيانات الإعلانية وفقاً لسياساتها الخاصة."},
+                {"الأطفال والتعديلات",
+                        "التطبيق موجّه لتلاميذ الثانوي المقبلين على امتحان البكالوريا، وليس موجّهاً للأطفال دون 13 سنة. لا نجمع عن قصد معلومات شخصية من أطفال دون 13 سنة. قد نُحدّث هذه السياسة إذا تغيّرت ممارسات البيانات، وستُنشر النسخة الأحدث مع تاريخ سريانها."},
+                {"التواصل",
+                        "لأي سؤال يتعلق بالخصوصية، راسلنا على: neydperic@gmail.com"}
+        } : new String[][]{
+                {"Informations et utilisation",
+                        "La calculatrice traite les notes et la filière que vous saisissez afin de calculer les moyennes ; les calculs sont effectués sur votre appareil. L’application ne vous demande pas de créer un compte ni de fournir votre nom, votre adresse e-mail ou votre localisation. Nous ne recevons pas vos notes ni les autres données saisies dans la calculatrice.\n\nL’application enregistre uniquement vos préférences de langue et de thème sur votre appareil. Elle n’enregistre pas les notes comme données persistantes ; Android peut conserver temporairement l’état de l’écran pour restaurer une session en cours."},
+                {"Publicité",
+                        "L’application est gratuite et affiche des publicités fournies par Google AdMob. Pour afficher ces publicités, l’application utilise une connexion Internet, et le SDK Google Mobile Ads peut collecter automatiquement et partager avec Google et ses partenaires publicitaires :\n\n• l’identifiant publicitaire de votre appareil (identifiant publicitaire Android) ;\n• votre adresse IP, qui peut servir à estimer votre localisation approximative (pays ou ville) ;\n• des informations sur l’appareil et l’application (modèle, version du système, langue, version de l’application) ;\n• les interactions avec les publicités et des données de diagnostic (plantages, performances).\n\nCes informations servent à diffuser et mesurer les publicités, limiter les répétitions, prévenir la fraude et, lorsque la loi le permet et que vous y avez consenti, afficher des publicités personnalisées. Vos notes et les données saisies dans la calculatrice ne sont jamais partagées avec les annonceurs. Les données collectées par le SDK sont chiffrées pendant leur transmission. Le traitement effectué par Google est régi par sa propre politique :\npolicies.google.com/technologies/partner-sites"},
+                {"Vos choix",
+                        "Lorsque la loi l’exige (par exemple dans l’Espace économique européen, au Royaume-Uni et en Suisse), l’application vous demande votre consentement avant d’afficher des publicités personnalisées. Vous pouvez réinitialiser ou supprimer votre identifiant publicitaire, ou désactiver les publicités personnalisées, dans les paramètres de votre appareil (Paramètres > Google > Annonces, ou Paramètres > Confidentialité > Annonces selon l’appareil). Des publicités non personnalisées peuvent toujours s’afficher."},
+                {"Partage et liens tiers",
+                        "Le développeur ne reçoit ni ne vend vos données et n’utilise pas d’outil d’analyse distinct. En dehors des informations publicitaires décrites ci-dessus, l’application ne partage pas vos données. Si vous choisissez le bouton Reddit ou PayPal, l’application ouvre ce service en dehors de l’application ; ces services appliquent leurs propres politiques de confidentialité."},
+                {"Conservation",
+                        "Les préférences de l’application sont supprimées lorsque vous effacez ses données ou la désinstallez. Les données publicitaires sont conservées par Google conformément à ses propres politiques."},
+                {"Enfants et modifications",
+                        "L’application est destinée aux lycéens préparant le baccalauréat et ne s’adresse pas aux enfants de moins de 13 ans. Nous ne collectons pas sciemment de renseignements personnels auprès d’enfants de moins de 13 ans. Nous pouvons modifier cette politique si nos pratiques de données changent ; la version la plus récente sera publiée avec sa date d’entrée en vigueur."},
+                {"Contact",
+                        "Pour toute question relative à la confidentialité, écrivez à : neydperic@gmail.com"}
+        };
+
+        Dialog dialog = new Dialog(this);
+        LinearLayout panel = new LinearLayout(this);
+        panel.setOrientation(LinearLayout.VERTICAL);
+        panel.setPadding(dp(20), dp(20), dp(20), dp(16));
+        panel.setBackground(roundDrawable(SURFACE, 20, BORDER));
+        panel.setLayoutDirection(arabicLanguage
+                ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR);
+
+        TextView heading = text(tr("Politique de confidentialité", "سياسة الخصوصية"), 19, TEXT);
+        heading.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        panel.addView(heading, matchWrap());
+        TextView effectiveDate = text(tr("En vigueur depuis le 18 octobre 2026",
+                "سارية منذ 18 أكتوبر 2026"), 12, MUTED);
+        LinearLayout.LayoutParams dateParams = matchWrap();
+        dateParams.topMargin = dp(4);
+        panel.addView(effectiveDate, dateParams);
+
+        ScrollView scroll = new ScrollView(this);
+        LinearLayout body = new LinearLayout(this);
+        body.setOrientation(LinearLayout.VERTICAL);
+        for (String[] section : sections) {
+            TextView sectionTitle = text(section[0], 14, TEAL);
+            sectionTitle.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            LinearLayout.LayoutParams titleParams = matchWrap();
+            titleParams.topMargin = dp(14);
+            body.addView(sectionTitle, titleParams);
+            TextView sectionBody = text(section[1], 13, TEXT);
+            sectionBody.setLineSpacing(dp(2), 1f);
+            sectionBody.setTextIsSelectable(true);
+            LinearLayout.LayoutParams bodyParams = matchWrap();
+            bodyParams.topMargin = dp(4);
+            body.addView(sectionBody, bodyParams);
+        }
+        scroll.addView(body, matchWrap());
+        panel.addView(scroll, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+
+        Button close = new Button(this);
+        close.setText(tr("Fermer", "إغلاق"));
+        close.setTextColor(Color.WHITE);
+        close.setTextSize(14);
+        close.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        close.setAllCaps(false);
+        close.setBackground(roundDrawable(TEAL, 10, 0));
+        close.setOnClickListener(view -> dialog.dismiss());
+        LinearLayout.LayoutParams closeParams = matchWidth(dp(44));
+        closeParams.topMargin = dp(12);
+        panel.addView(close, closeParams);
+
+        dialog.setContentView(panel);
+        dialog.setCancelable(true);
+        dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            dialog.getWindow().setDimAmount(0.38f);
+            dialog.getWindow().setLayout(
+                    getResources().getDisplayMetrics().widthPixels - dp(32),
+                    Math.round(getResources().getDisplayMetrics().heightPixels * 0.82f));
+        }
     }
 
     private TextView text(String value, int size, int color) {
