@@ -1,22 +1,87 @@
 const FLAGS = {
+  en: '<svg viewBox="0 0 24 16" aria-hidden="true"><path fill="#012169" d="M0 0h24v16H0z"/><path stroke="#fff" stroke-width="3" d="M0 0l24 16M24 0L0 16"/><path stroke="#c8102e" stroke-width="1.2" d="M0 0l24 16M24 0L0 16"/><path stroke="#fff" stroke-width="5" d="M12 0v16M0 8h24"/><path stroke="#c8102e" stroke-width="3" d="M12 0v16M0 8h24"/></svg>',
   fr: '<svg viewBox="0 0 24 16" aria-hidden="true"><path fill="#002395" d="M0 0h8v16H0z"/><path fill="#fff" d="M8 0h8v16H8z"/><path fill="#ed2939" d="M16 0h8v16h-8z"/></svg>',
   ar: '<svg viewBox="0 0 24 16" aria-hidden="true"><path fill="#c1272d" d="M0 0h24v16H0z"/><path fill="none" stroke="#006233" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.1" d="m12 2 3.35 10.2L3.2 4.65h17.6L8.65 12.2z"/></svg>'
 };
-const REGIONAL_COEFFICIENTS = [2, 4, 2, 2];
-const REGIONAL_SUBJECTS = {
-  fr: ["Arabe", "Français", "Éducation islamique", "Histoire-Géographie"],
-  ar: ["اللغة العربية", "اللغة الفرنسية", "التربية الإسلامية", "التاريخ والجغرافيا"]
+const REGIONAL = {
+  subjects: { fr: ["Arabe", "Français", "Éducation islamique", "Histoire-Géographie"], ar: ["اللغة العربية", "اللغة الفرنسية", "التربية الإسلامية", "التاريخ والجغرافيا"] },
+  coefficients: [2, 4, 2, 2]
 };
+const TECH_REGIONAL = {
+  subjects: { fr: ["Arabe", "Français", "Éducation islamique"], ar: ["اللغة العربية", "اللغة الفرنسية", "التربية الإسلامية"] },
+  coefficients: [2, 4, 2]
+};
+const SCIENCE_SUBJECTS = ["Mathématiques", "Physique-Chimie", "Sciences de la Vie et de la Terre", "Anglais", "Philosophie"];
+const SCIENCE_SUBJECTS_AR = ["الرياضيات", "الفيزياء والكيمياء", "علوم الحياة والأرض", "الإنجليزية", "الفلسفة"];
+const TECH_SUBJECTS = ["Sciences de l'ingénieur", "Mathématiques", "Physique-Chimie", "Anglais", "Philosophie"];
+const TECH_SUBJECTS_AR = ["علوم المهندس", "الرياضيات", "الفيزياء والكيمياء", "الإنجليزية", "الفلسفة"];
+REGIONAL.subjects.en = ["Arabic", "French", "Islamic Education", "History-Geography"];
+TECH_REGIONAL.subjects.en = ["Arabic", "French", "Islamic Education"];
+const SUBJECT_EN = {
+  "Mathématiques": "Mathematics", "Physique-Chimie": "Physics-Chemistry",
+  "Sciences de la Vie et de la Terre": "Life and Earth Sciences", "Anglais": "English",
+  "Philosophie": "Philosophy", "Sciences de l'ingénieur": "Engineering Sciences",
+  "Économie générale et statistiques": "General Economics and Statistics",
+  "Comptabilité et mathématiques financières": "Accounting and Financial Mathematics",
+  "Économie et organisation administrative des entreprises": "Economics and Business Administration"
+};
+const TRACK_EN = ["2nd Bac Physical Sciences (PC)", "2nd Bac Life and Earth Sciences (SVT)",
+  "2nd Bac Mathematical Sciences A", "2nd Bac Mathematical Sciences B", "2nd Bac Economic Sciences",
+  "2nd Bac Electrical Sciences and Technologies (STE)", "2nd Bac Mechanical Sciences and Technologies (STM)"];
+// Tracks, coefficients and formulas mirror the Android app (MainActivity.java, native-lib.cpp).
 const TRACKS = [
-  { fr: "2 Bac Sciences Physiques (PC)", ar: "الثانية باكالوريا علوم فيزيائية (PC)", subjects: ["Mathématiques", "Physique-Chimie", "Sciences de la Vie et de la Terre", "Anglais", "Philosophie"], subjectsAr: ["الرياضيات", "الفيزياء والكيمياء", "علوم الحياة والأرض", "الإنجليزية", "الفلسفة"], coefficients: [7, 7, 3, 2, 2] },
-  { fr: "2 Bac Sciences de la Vie et de la Terre (SVT)", ar: "الثانية باكالوريا علوم الحياة والأرض (SVT)", subjects: ["Mathématiques", "Physique-Chimie", "Sciences de la Vie et de la Terre", "Anglais", "Philosophie"], subjectsAr: ["الرياضيات", "الفيزياء والكيمياء", "علوم الحياة والأرض", "الإنجليزية", "الفلسفة"], coefficients: [5, 5, 7, 2, 2] },
-  { fr: "2 Bac Sciences Mathématiques A", ar: "الثانية باكالوريا علوم رياضية أ", subjects: ["Mathématiques", "Physique-Chimie", "Sciences de la Vie et de la Terre", "Anglais", "Philosophie"], subjectsAr: ["الرياضيات", "الفيزياء والكيمياء", "علوم الحياة والأرض", "الإنجليزية", "الفلسفة"], coefficients: [9, 7, 3, 2, 2] },
-  { fr: "2 Bac Sciences Mathématiques B", ar: "الثانية باكالوريا علوم رياضية ب", subjects: ["Mathématiques", "Physique-Chimie", "Sciences de l'ingénieur", "Anglais", "Philosophie"], subjectsAr: ["الرياضيات", "الفيزياء والكيمياء", "علوم المهندس", "الإنجليزية", "الفلسفة"], coefficients: [9, 7, 3, 2, 2] }
+  { fr: "2 Bac Sciences Physiques (PC)", ar: "الثانية باكالوريا علوم فيزيائية (PC)", subjects: SCIENCE_SUBJECTS, subjectsAr: SCIENCE_SUBJECTS_AR, coefficients: [7, 7, 5, 2, 2], regional: REGIONAL },
+  { fr: "2 Bac Sciences de la Vie et de la Terre (SVT)", ar: "الثانية باكالوريا علوم الحياة والأرض (SVT)", subjects: SCIENCE_SUBJECTS, subjectsAr: SCIENCE_SUBJECTS_AR, coefficients: [7, 5, 7, 2, 2], regional: REGIONAL },
+  { fr: "2 Bac Sciences Mathématiques A", ar: "الثانية باكالوريا علوم رياضية أ", subjects: SCIENCE_SUBJECTS, subjectsAr: SCIENCE_SUBJECTS_AR, coefficients: [9, 7, 3, 2, 2], regional: REGIONAL },
+  { fr: "2 Bac Sciences Mathématiques B", ar: "الثانية باكالوريا علوم رياضية ب", subjects: ["Mathématiques", "Physique-Chimie", "Sciences de l'ingénieur", "Anglais", "Philosophie"], subjectsAr: ["الرياضيات", "الفيزياء والكيمياء", "علوم المهندس", "الإنجليزية", "الفلسفة"], coefficients: [9, 7, 3, 2, 2], regional: REGIONAL },
+  { fr: "2 Bac Sciences Économiques", ar: "الثانية باكالوريا علوم اقتصادية", subjects: ["Économie générale et statistiques", "Comptabilité et mathématiques financières", "Économie et organisation administrative des entreprises", "Mathématiques", "Anglais", "Philosophie"], subjectsAr: ["الاقتصاد العام والإحصاء", "المحاسبة والرياضيات المالية", "الاقتصاد والتنظيم الإداري للمقاولات", "الرياضيات", "الإنجليزية", "الفلسفة"], coefficients: [6, 4, 3, 4, 2, 2], regional: REGIONAL },
+  { fr: "2 Bac Sciences et Technologies Électriques (STE)", ar: "الثانية باكالوريا علوم وتكنولوجيات كهربائية (STE)", subjects: TECH_SUBJECTS, subjectsAr: TECH_SUBJECTS_AR, coefficients: [8, 7, 5, 2, 2], regional: TECH_REGIONAL },
+  { fr: "2 Bac Sciences et Technologies Mécaniques (STM)", ar: "الثانية باكالوريا علوم وتكنولوجيات ميكانيكية (STM)", subjects: TECH_SUBJECTS, subjectsAr: TECH_SUBJECTS_AR, coefficients: [8, 7, 5, 2, 2], regional: TECH_REGIONAL }
 ];
 
+TRACKS.forEach((track, index) => {
+  track.en = TRACK_EN[index];
+  track.subjectsEn = track.subjects.map((subject) => SUBJECT_EN[subject]);
+});
+
+function subjectLabel(track, index) {
+  return language === "ar" ? track.subjectsAr[index] : language === "en" ? track.subjectsEn[index] : track.subjects[index];
+}
+
 const TEXT = {
+  en: {
+    title: "BAC Note Calculator", subtitle: "Moroccan baccalaureate calculator", donation: "Support the developer",
+    nationalTab: "Bac calculation", regionalTab: "Regional exam", track: "YOUR TRACK",
+    nationalExam: "NATIONAL EXAM", regionalExam: "REGIONAL EXAM — PER-SUBJECT CALCULATION",
+    continuous: "CONTINUOUS ASSESSMENT", continuousHint: "Average of the two semesters.",
+    semesterOne: "Continuous assessment — semester 1", semesterTwo: "Continuous assessment — semester 2",
+    calculateNational: "Calculate national average", calculateRegional: "Calculate regional average",
+    calculateContinuous: "Calculate continuous assessment average", calculateGeneral: "Calculate overall average",
+    nationalScore: "NATIONAL AVERAGE", regionalScore: "REGIONAL AVERAGE", generalScore: "OVERALL AVERAGE",
+    resultPrompt: "Enter your grades to calculate your average",
+    nationalAverage: "National average: ", regionalAverage: "Regional average: ",
+    continuousAverage: "Continuous assessment average: ",
+    formula: "25% continuous assessment + 25% regional + 50% national",
+    regionalHint: "Enter your grades out of 20.",
+    regionalWeights: "Regional coefficients: ",
+    freeCandidate: "Free candidate (no continuous assessment)", trackLabel: "Track: ",
+    formulaFree: "Free candidate: 25% regional + 75% national",
+    footer: "© 2026 NeydPeric. All rights reserved.", privacy: "Privacy policy", dialogTitle: "Your overall average",
+    invalid: (subject) => `Enter a grade between 0 and 20 for "${subject}".`,
+    missingNational: "Enter at least one national exam grade.",
+    missingContinuous: "Enter at least one continuous assessment grade.",
+    missingRegional: "Enter all the regional exam grades.",
+    invalidTitle: "Invalid grade", missingTitle: "Missing grades", close: "Close",
+    notAdmitted: "Not admitted", passable: "Pass", fairlyGood: "Fairly good", good: "Good", veryGood: "Very good", excellent: "Excellent",
+    bravo: "Well done!", persist: "Keep going",
+    passedMessage: "You have a great baccalaureate average.",
+    failedMessage: "Keep up the effort, you can improve!",
+    admitted: "Admitted (estimate) — Congratulations!", notAdmittedStatus: "Not admitted (estimate) — Keep trying",
+    nationalCalculated: "National average calculated", continuousCalculated: "Continuous assessment average calculated",
+    languageDescription: "Change language", themeLight: "Switch to light theme", themeDark: "Switch to dark theme"
+  },
   fr: {
-    title: "BAC Note calculé", subtitle: "Calculatrice du baccalauréat marocain", donation: "Donation",
+    title: "BAC Note calculé", subtitle: "Calculatrice du baccalauréat marocain", donation: "Support the developer",
     nationalTab: "Calcul Bac", regionalTab: "Examen régional", track: "VOTRE FILIÈRE",
     nationalExam: "EXAMEN NATIONAL", regionalExam: "EXAMEN RÉGIONAL — CALCUL PAR MATIÈRE",
     continuous: "CONTRÔLE CONTINU", continuousHint: "Moyenne des deux semestres.",
@@ -29,8 +94,10 @@ const TEXT = {
     continuousAverage: "Moyenne du contrôle continu : ",
     formula: "25 % contrôle continu + 25 % régional + 50 % national",
     regionalHint: "Saisissez vos notes sur 20.",
-    regionalWeights: "Coefficients régionaux : Arabe 2 · Français 4 · Éducation islamique 2 · Histoire-Géographie 2",
-    footer: "© 2026 NeydPeric. All rights reserved.", dialogTitle: "Votre moyenne générale",
+    regionalWeights: "Coefficients régionaux : ",
+    freeCandidate: "Candidat libre (sans contrôle continu)", trackLabel: "Filière : ",
+    formulaFree: "Candidat libre : 25 % régional + 75 % national",
+    footer: "© 2026 NeydPeric. All rights reserved.", privacy: "Politique de confidentialité", dialogTitle: "Votre moyenne générale",
     invalid: (subject) => `Saisissez une note entre 0 et 20 pour « ${subject} ».`,
     missingNational: "Saisissez au moins une note de l'examen national.",
     missingContinuous: "Saisissez au moins une note de contrôle continu.",
@@ -40,12 +107,12 @@ const TEXT = {
     bravo: "Bravo !", persist: "À persévérer",
     passedMessage: "Vous avez une belle moyenne au baccalauréat.",
     failedMessage: "Continue tes efforts, tu peux progresser!",
-    admitted: "ADMIS — Félicitations !", notAdmittedStatus: "NON ADMIS — Encore un effort",
+    admitted: "Admis (estimation) — Félicitations !", notAdmittedStatus: "Non admis (estimation) — Encore un effort",
     nationalCalculated: "Moyenne nationale calculée", continuousCalculated: "Moyenne du contrôle continu calculée",
     languageDescription: "Changer de langue", themeLight: "Passer au thème clair", themeDark: "Passer au thème sombre"
   },
   ar: {
-    title: "حاسبة معدل البكالوريا", subtitle: "حاسبة معدل البكالوريا المغربية", donation: "Donation",
+    title: "حاسبة معدل البكالوريا", subtitle: "حاسبة معدل البكالوريا المغربية", donation: "Support the developer",
     nationalTab: "حساب البكالوريا", regionalTab: "الامتحان الجهوي", track: "الشعبة",
     nationalExam: "الامتحان الوطني", regionalExam: "الامتحان الجهوي — الحساب حسب المادة",
     continuous: "المراقبة المستمرة", continuousHint: "معدل الدورتين.",
@@ -58,8 +125,10 @@ const TEXT = {
     continuousAverage: "معدل المراقبة المستمرة: ",
     formula: "25٪ المراقبة المستمرة + 25٪ الجهوي + 50٪ الوطني",
     regionalHint: "أدخل نقطك من 20.",
-    regionalWeights: "معاملات الجهوي: العربية 2 · الفرنسية 4 · التربية الإسلامية 2 · التاريخ والجغرافيا 2",
-    footer: "© 2026 NeydPeric. جميع الحقوق محفوظة.", dialogTitle: "معدلك العام",
+    regionalWeights: "معاملات الجهوي: ",
+    freeCandidate: "مترشح حر (بدون مراقبة مستمرة)", trackLabel: "الشعبة: ",
+    formulaFree: "مترشح حر: 25٪ الجهوي + 75٪ الوطني",
+    footer: "© 2026 NeydPeric. جميع الحقوق محفوظة.", privacy: "سياسة الخصوصية", dialogTitle: "معدلك العام",
     invalid: (subject) => `أدخل نقطة بين 0 و20 في مادة « ${subject} ».`,
     missingNational: "أدخل نقطة واحدة على الأقل في الامتحان الوطني.",
     missingContinuous: "أدخل نقطة واحدة على الأقل في المراقبة المستمرة.",
@@ -69,7 +138,7 @@ const TEXT = {
     bravo: "أحسنت!", persist: "واصل المحاولة",
     passedMessage: "لقد حصلت على معدل جيد في البكالوريا.",
     failedMessage: "واصل اجتهادك، يمكنك تحقيق نتيجة أفضل!",
-    admitted: "ناجح — تهانينا!", notAdmittedStatus: "غير ناجح — حظاً موفقاً",
+    admitted: "ناجح (تقديرياً) — تهانينا!", notAdmittedStatus: "غير ناجح (تقديرياً) — حظاً موفقاً",
     nationalCalculated: "تم حساب المعدل الوطني", continuousCalculated: "تم حساب معدل المراقبة المستمرة",
     languageDescription: "تغيير اللغة", themeLight: "التبديل إلى المظهر الفاتح", themeDark: "التبديل إلى المظهر الداكن"
   }
@@ -125,8 +194,11 @@ function warnStorageUnavailable(error) {
   console.warn("Persistent storage is unavailable; changes will last only until the app closes.", error);
 }
 
-let language = getStoredValue("bac-language") === "ar" ? "ar" : "fr";
+const savedLanguage = getStoredValue("bac-language");
+let language = ["fr", "ar", "en"].includes(savedLanguage) ? savedLanguage
+  : /^ar/i.test(navigator.language) ? "ar" : /^en/i.test(navigator.language) ? "en" : "fr";
 let theme = getStoredValue("bac-theme") === "dark" ? "dark" : "light";
+let freeCandidate = getStoredValue("bac-free-candidate") === "true";
 let toastTimer;
 
 function tr(key) {
@@ -192,7 +264,7 @@ function addGradeRow(parent, { label, value = "", coefficient, id }) {
     const chip = document.createElement("span");
     chip.className = "grade-coefficient";
     chip.textContent = `×${coefficient}`;
-    chip.setAttribute("aria-label", language === "fr" ? `coefficient ${coefficient}` : `المعامل ${coefficient}`);
+    chip.setAttribute("aria-label", language === "ar" ? `المعامل ${coefficient}` : `${language === "en" ? "coefficient" : "coefficient"} ${coefficient}`);
     row.append(chip, input);
   } else {
     row.append(input);
@@ -221,17 +293,20 @@ function renderGradeRows() {
   regional.replaceChildren();
   const savedNational = gradeState.national;
   track.subjects.forEach((subject, index) => addGradeRow(national, {
-    label: language === "ar" ? track.subjectsAr[index] : subject,
+    label: subjectLabel(track, index),
     value: savedNational[index] || "",
     coefficient: track.coefficients[index],
     id: `national-grade-${index}`
   }));
-  REGIONAL_SUBJECTS[language].forEach((subject, index) => addGradeRow(regional, {
+  track.regional.subjects[language].forEach((subject, index) => addGradeRow(regional, {
     label: subject,
     value: gradeState.regional[index] || "",
-    coefficient: REGIONAL_COEFFICIENTS[index],
+    coefficient: track.regional.coefficients[index],
     id: `regional-grade-${index}`
   }));
+  $("#regional-track").textContent = tr("trackLabel") + track[language];
+  $("#regional-weights").textContent = tr("regionalWeights") + track.regional.subjects[language]
+    .map((subject, index) => `${subject} ${track.regional.coefficients[index]}`).join(" · ");
   $("#semester-one").value = gradeState.semesterOne;
   $("#semester-two").value = gradeState.semesterTwo;
   persistGrades();
@@ -240,9 +315,10 @@ function renderGradeRows() {
 function updateText() {
   document.documentElement.lang = language;
   document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
-  $(".brand").setAttribute("aria-label", language === "fr"
-    ? "BAC Note calculé — accueil" : "حاسبة معدل البكالوريا — الصفحة الرئيسية");
-  $(".page-tabs").setAttribute("aria-label", language === "fr" ? "Calculatrice" : "حاسبة معدل البكالوريا");
+  const brandLabels = { fr: "BAC Note calculé — accueil", en: "BAC Note Calculator — home", ar: "حاسبة معدل البكالوريا — الصفحة الرئيسية" };
+  const tabLabels = { fr: "Calculatrice", en: "Calculator", ar: "حاسبة معدل البكالوريا" };
+  $(".brand").setAttribute("aria-label", brandLabels[language]);
+  $(".page-tabs").setAttribute("aria-label", tabLabels[language]);
   document.querySelectorAll("[data-i18n]").forEach((node) => {
     node.textContent = tr(node.dataset.i18n);
   });
@@ -252,13 +328,22 @@ function updateText() {
     flag.innerHTML = FLAGS[flag.dataset.flag];
   });
   $("#language-button").setAttribute("aria-label", tr("languageDescription"));
-  $("#language-menu button[data-language='fr']").setAttribute("aria-checked", String(language === "fr"));
-  $("#language-menu button[data-language='ar']").setAttribute("aria-checked", String(language === "ar"));
+  document.querySelectorAll("#language-menu button[data-language]").forEach((button) => {
+    button.setAttribute("aria-checked", String(button.dataset.language === language));
+  });
   $("#dialog-close").setAttribute("aria-label", tr("close"));
   setTheme(theme);
   renderTrackOptions();
   renderGradeRows();
+  applyFreeCandidate();
   resetResultDisplay();
+}
+
+function applyFreeCandidate() {
+  $("#free-candidate").checked = freeCandidate;
+  $("#continuous-card").hidden = freeCandidate;
+  $(".formula-note[data-i18n]").dataset.i18n = freeCandidate ? "formulaFree" : "formula";
+  $(".formula-note[data-i18n]").textContent = tr(freeCandidate ? "formulaFree" : "formula");
 }
 
 function resetResultDisplay() {
@@ -306,8 +391,31 @@ function weightedAverage(grades, coefficients) {
   return grades.reduce((sum, grade, index) => sum + grade * coefficients[index], 0) / coefficientTotal;
 }
 
+function roundTwoDecimals(value) {
+  let [digits, exponent] = Math.abs(value).toExponential().split("e");
+  digits = digits.replace(".", "");
+  const pointAt = Number(exponent) + 1;
+  let whole;
+  let fraction;
+  if (pointAt <= 0) {
+    whole = "0";
+    fraction = "0".repeat(-pointAt) + digits;
+  } else if (pointAt >= digits.length) {
+    whole = digits + "0".repeat(pointAt - digits.length);
+    fraction = "";
+  } else {
+    whole = digits.slice(0, pointAt);
+    fraction = digits.slice(pointAt);
+  }
+  fraction = (fraction + "000").slice(0, 3);
+  let cents = BigInt(whole + fraction.slice(0, 2));
+  if (Number(fraction[2]) >= 5) cents += 1n;
+  const text = cents.toString().padStart(3, "0");
+  return text.slice(0, -2) + "." + text.slice(-2);
+}
+
 function formatAverage(value) {
-  return `${value.toFixed(2)} / 20`;
+  return `${roundTwoDecimals(value)} / 20`;
 }
 
 function setResultStatus(message, passed = null) {
@@ -324,7 +432,7 @@ function calculateNational() {
   rows.forEach((row, index) => {
     const input = row.querySelector("input");
     if (!input.value.trim()) return;
-    const grade = readGrade(input, language === "ar" ? track.subjectsAr[index] : track.subjects[index]);
+    const grade = readGrade(input, subjectLabel(track, index));
     if (Number.isNaN(grade)) return;
     grades.push(grade);
     coefficients.push(track.coefficients[index]);
@@ -364,7 +472,7 @@ function calculateRegional() {
       missing = true;
       continue;
     }
-    const value = readGrade(input, REGIONAL_SUBJECTS[language][index]);
+    const value = readGrade(input, TRACKS[Number($("#track-select").value)].regional.subjects[language][index]);
     if (Number.isNaN(value)) return null;
     grades.push(value);
   }
@@ -374,7 +482,7 @@ function calculateRegional() {
     firstEmpty?.focus();
     return null;
   }
-  const average = weightedAverage(grades, REGIONAL_COEFFICIENTS);
+  const average = weightedAverage(grades, TRACKS[Number($("#track-select").value)].regional.coefficients);
   $("#regional-average").textContent = `${tr("regionalAverage")}${formatAverage(average)}`;
   $("#regional-score").textContent = formatAverage(average);
   return average;
@@ -390,17 +498,17 @@ function calculateGeneral() {
   const national = [];
   const track = TRACKS[Number($("#track-select").value)];
   for (const [index, input] of nationalInputs.entries()) {
-    const value = readGrade(input, language === "ar" ? track.subjectsAr[index] : track.subjects[index]);
+    const value = readGrade(input, subjectLabel(track, index));
     if (value === null || Number.isNaN(value)) {
       if (value === null) {
         input.focus();
-        showToast(tr("invalid")(language === "ar" ? track.subjectsAr[index] : track.subjects[index]));
+        showToast(tr("invalid")(subjectLabel(track, index)));
       }
       return;
     }
     national.push(value);
   }
-  const semesterInputs = [$("#semester-one"), $("#semester-two")];
+  const semesterInputs = freeCandidate ? [] : [$("#semester-one"), $("#semester-two")];
   if (semesterInputs.some((input) => !input.value.trim())) {
     const firstEmpty = semesterInputs.find((input) => !input.value.trim());
     firstEmpty.focus();
@@ -415,16 +523,18 @@ function calculateGeneral() {
     firstEmpty.focus();
     return showToast(tr("missingRegional"), tr("missingTitle"));
   }
-  const regional = regionalInputs.map((input, index) => readGrade(input, REGIONAL_SUBJECTS[language][index]));
+  const regional = regionalInputs.map((input, index) => readGrade(input, track.regional.subjects[language][index]));
   if (regional.some((value) => value === null || Number.isNaN(value))) return;
 
   const nationalAverage = weightedAverage(national, track.coefficients);
-  const regionalAverage = weightedAverage(regional, REGIONAL_COEFFICIENTS);
-  const continuousAverage = (semesters[0] + semesters[1]) / 2;
-  const generalAverage = continuousAverage * 0.25 + regionalAverage * 0.25 + nationalAverage * 0.5;
+  const regionalAverage = weightedAverage(regional, track.regional.coefficients);
+  const continuousAverage = freeCandidate ? null : (semesters[0] + semesters[1]) / 2;
+  const generalAverage = freeCandidate
+    ? regionalAverage * 0.25 + nationalAverage * 0.75
+    : continuousAverage * 0.25 + regionalAverage * 0.25 + nationalAverage * 0.5;
   const passed = generalAverage >= 10;
   $("#national-average").textContent = `${tr("nationalAverage")}${formatAverage(nationalAverage)}`;
-  $("#continuous-average").textContent = `${tr("continuousAverage")}${formatAverage(continuousAverage)}`;
+  if (!freeCandidate) $("#continuous-average").textContent = `${tr("continuousAverage")}${formatAverage(continuousAverage)}`;
   $("#regional-average").textContent = `${tr("regionalAverage")}${formatAverage(regionalAverage)}`;
   $("#national-score").textContent = formatAverage(nationalAverage);
   $("#regional-score").textContent = formatAverage(regionalAverage);
@@ -524,6 +634,12 @@ $("#semester-one").addEventListener("input", (event) => {
 $("#semester-two").addEventListener("input", (event) => {
   event.currentTarget.removeAttribute("aria-invalid");
   persistGrades();
+});
+$("#free-candidate").addEventListener("change", (event) => {
+  freeCandidate = event.currentTarget.checked;
+  setStoredValue("bac-free-candidate", String(freeCandidate));
+  applyFreeCandidate();
+  resetResultDisplay();
 });
 $("#calculate-national").addEventListener("click", calculateNational);
 $("#calculate-continuous").addEventListener("click", calculateContinuous);
