@@ -50,7 +50,7 @@ function subjectLabel(track, index) {
 
 const TEXT = {
   en: {
-    title: "BAC Note Calculator", subtitle: "Moroccan baccalaureate calculator", donation: "Support the developer",
+    title: "BAC Note Calculator", subtitle: "Moroccan baccalaureate calculator", donation: "Support the developer", androidApp: "Android app",
     nationalTab: "Bac calculation", regionalTab: "Regional exam", track: "YOUR TRACK",
     nationalExam: "NATIONAL EXAM", regionalExam: "REGIONAL EXAM — PER-SUBJECT CALCULATION",
     continuous: "CONTINUOUS ASSESSMENT", continuousHint: "Average of the two semesters.",
@@ -81,7 +81,7 @@ const TEXT = {
     languageDescription: "Change language", themeLight: "Switch to light theme", themeDark: "Switch to dark theme"
   },
   fr: {
-    title: "BAC Note calculé", subtitle: "Calculatrice du baccalauréat marocain", donation: "Support the developer",
+    title: "BAC Note calculé", subtitle: "Calculatrice du baccalauréat marocain", donation: "Support the developer", androidApp: "Application Android",
     nationalTab: "Calcul Bac", regionalTab: "Examen régional", track: "VOTRE FILIÈRE",
     nationalExam: "EXAMEN NATIONAL", regionalExam: "EXAMEN RÉGIONAL — CALCUL PAR MATIÈRE",
     continuous: "CONTRÔLE CONTINU", continuousHint: "Moyenne des deux semestres.",
@@ -112,7 +112,7 @@ const TEXT = {
     languageDescription: "Changer de langue", themeLight: "Passer au thème clair", themeDark: "Passer au thème sombre"
   },
   ar: {
-    title: "حاسبة معدل البكالوريا", subtitle: "حاسبة معدل البكالوريا المغربية", donation: "Support the developer",
+    title: "حاسبة معدل البكالوريا", subtitle: "حاسبة معدل البكالوريا المغربية", donation: "Support the developer", androidApp: "تطبيق أندرويد",
     nationalTab: "حساب البكالوريا", regionalTab: "الامتحان الجهوي", track: "الشعبة",
     nationalExam: "الامتحان الوطني", regionalExam: "الامتحان الجهوي — الحساب حسب المادة",
     continuous: "المراقبة المستمرة", continuousHint: "معدل الدورتين.",
